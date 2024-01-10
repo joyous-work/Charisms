@@ -1,0 +1,72 @@
+﻿@page
+@model Charisms_2.Pages.TakeQuizModel
+@{
+    ViewData["Title"] = "TakeQuiz";
+}
+
+<h1>Take Quiz</h1>
+<p class="text-danger">@Model.TakeQuiz_Message</p>
+<hr/>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @* <input type="hidden" asp-for="newQuiz.QuizId" />   does not work for collections! *@
+    <div class="form-group col-md-3">
+        @* <label asp-for="quizName" class="control-label"></label>*@
+        <label>Name</label>
+        <input name="nq_name" class="form-control" required/>
+        @* <span asp-validation-for="@Model.quizName" class="text-danger"></span> *@
+    </div>
+    <hr />
+    <div class="form-group">
+        <table class="table mt-3" style="width:100%">
+            <colgroup>
+                <col span="1" style="width: 2%;">
+                <col span="1" style="width: 75%;">
+                <col span="1" style="width: 23%;">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">Number</th>
+                    <th scope="col">Statement</th>
+                    <th scope="col">Response</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.ShuffledPrompts.Length; i++)
+                {
+                    int pid = @Model.ShuffledPrompts.ElementAt(i).PromptId;
+                    <input type="hidden" name="nq_pids" value=@(pid) class="form-control" />
+                    <tr>
+                        <td>@(i + 1)</td>
+                        @* <td>@(pid)</td> *@
+                        <td>@Model.ShuffledPrompts.ElementAt(i).Statement</td>
+                        <td>
+                            @* <label asp-for="newQuiz.Responses.ElementAt(pid-1).answer" class="control-label"></label> *@
+                            <select name="nq_answers" id=@($"{pid}") class="form-control" required>
+                            @* data-val="true" data-val-required="Required">   trouble getting required to work *@
+                                <option value=0>+ Select response +</option>
+                                <option value=1>False</option>
+                                <option value=2>More False than true</option>
+                                <option value=3>More True than false</option>
+                                <option value=4>Almost always True</option>
+                                @* <option value=@($"{pid}:4")>Almost always True</option> *@
+                                @* <span asp-validation-for=" " class="text-danger"></span> *@
+                                @Html
+                            </select>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

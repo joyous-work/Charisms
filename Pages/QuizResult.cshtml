@@ -1,0 +1,25 @@
+﻿@page
+@model Charisms_2.Pages.QuizResultModel
+@{
+    ViewData["Title"] = "QuizResult";
+}
+
+<h1>Quiz Result</h1>
+<p> @DateTime.Now</p>
+<hr />
+
+<p>Thanks <em>@Model.QuizName</em> for taking the quiz.</p>
+<p>Based on your responses, your top three spiritual gifts could be: </p>
+<ol>
+    @foreach(var item in Model.RankedGifts.Take(3))
+    {
+        <li>@item.Value </li> @* @item.Key</li> *@
+    }
+</ol>
+
+<hr />
+<p>
+Learn more about your spiritual gifts in   
+<a href="~/revised-new-called-by-spirit-inventory-print-version-october-5-20212.pdf">The Quiz Pamphlet</a>
+</p>
+
