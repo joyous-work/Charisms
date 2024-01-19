@@ -1,5 +1,5 @@
 # Charisms
-A spiritual gifts inventory questionaire
+A spiritual gifts inventory questionnaire
 
 #### Contents:
 * razor-nodb branch implements the quiz with Razor pages without a database.
